@@ -38,3 +38,18 @@ services:
       - db
     ports:
       - "8000:8000"
+
+  poker-frontend:
+    image: ghcr.io/nishantchauhan949/poker-pocket-react-client:latest
+    container_name: poker-frontend
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Kolkata
+      - NODE_ENV=staging
+      - REACT_APP_API_URL=http://poker-backend:8000
+      - REACT_APP_WS_URL=ws://poker-backend:8000/api
+    depends_on:
+      - db
+      - poker-backend
+    ports:
+      - "8001:80"
